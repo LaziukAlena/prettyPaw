@@ -1,3 +1,6 @@
-@use 'style/var' as *;    
-@use 'style/fonts';
-@use 'style/style';
+@use "style/var" as *;
+@use "style/fonts" as *;
+@use "style/style" as *;
+@use "style/header" as *;
+@use "style/navigation" as *;
+@use "style/hero" as *;
