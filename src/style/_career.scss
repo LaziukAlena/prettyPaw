@@ -1,0 +1,71 @@
+@use "./var" as *;
+.career {
+  padding-top: 80px;
+  padding-bottom: 40px;
+
+  &__content {
+    margin-bottom: 40px;
+    @include md {
+      display: grid;
+      grid-template-columns: 1fr min-content;
+      justify-content: space-between;
+      gap: 11px 21px;
+      grid-template-areas:
+        "title link"
+        "description .";
+    }
+  }
+
+  &__title {
+    font-weight: 1000;
+    font-size: 32px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: $second;
+    margin-bottom: 24px;
+
+    @include md {
+      grid-area: title;
+      margin-bottom: 0;
+    }
+  }
+
+  &__description {
+    margin-bottom: 24px;
+
+    @include md {
+      grid-area: description;
+      margin-bottom: 0;
+    }
+  }
+
+  &__link {
+    @include md {
+      grid-area: link;
+    }
+  }
+
+  &__slider {
+  }
+
+  &__image-list {
+  }
+
+  &__image-item {
+    @include md {
+      &:nth-child(odd) {
+        width: 244px;
+      }
+      &:nth-child(even) {
+        width: 177px;
+      }
+    }
+  }
+
+  &__image-wrapper {
+  }
+
+  &__image {
+    border-radius: 16px;
+  }
+}
