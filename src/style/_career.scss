@@ -1,7 +1,12 @@
 @use "./var" as *;
 .career {
+  overflow-x: hidden;
   padding-top: 80px;
   padding-bottom: 40px;
+  @include lg {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
 
   &__content {
     margin-bottom: 40px;
@@ -13,6 +18,15 @@
       grid-template-areas:
         "title link"
         "description .";
+    }
+
+    @include lg {
+      gap: 27px 31px;
+      margin-bottom: 50px;
+    }
+
+    @include xl {
+      grid-template-columns: 690px min-content;
     }
   }
 
@@ -27,6 +41,10 @@
     @include md {
       grid-area: title;
       margin-bottom: 0;
+    }
+
+    @include lg {
+      font-size: 52px;
     }
   }
 
@@ -46,18 +64,31 @@
   }
 
   &__slider {
+    overflow-y: visible;
   }
 
   &__image-list {
   }
 
   &__image-item {
+    height: unset;
+    display: flex;
+    align-items: center;
     @include md {
       &:nth-child(odd) {
-        width: 244px;
+        width: 34%;
       }
       &:nth-child(even) {
-        width: 177px;
+        width: 25%;
+      }
+    }
+
+    @include xl {
+      &:nth-child(odd) {
+        width: 27%;
+      }
+      &:nth-child(even) {
+        width: 20%;
       }
     }
   }
