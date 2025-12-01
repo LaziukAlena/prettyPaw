@@ -74,6 +74,11 @@
     @include xl {
       gap: 60px;
     }
+
+    @include xxl {
+      max-width: 600px;
+      height: min-content;
+    }
   }
 
   &__description {
@@ -120,8 +125,7 @@
     }
   }
 
-  &__count-desc {
-  }
+  
 
   &__picture {
     @include lg {

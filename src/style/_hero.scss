@@ -36,6 +36,8 @@
       url(../img/poster-xl@4x.webp) 2x,
       url(../img/poster-xl@4x.jpg) 2x
     );
+    max-width: 2560px;
+    margin: 0 auto;
   }
 
   &__container {
