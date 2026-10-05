@@ -1,0 +1,146 @@
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
+const FaviconWebpackPlugin = require("favicons-webpack-plugin");
+
+const mode = process.env.NODE_ENV || "development";
+const devMode = mode === "development";
+const target = devMode ? "web" : "browserslist";
+const devtool = devMode ? "eval-cheap-module-source-map" : undefined;
+
+const PAGES = ["index", "page"];
+
+module.exports = {
+  mode,
+  target,
+  devtool,
+  devServer: {
+    port: 3000,
+    open: true,
+    hot: true,
+  },
+  entry: path.resolve(__dirname, "src", "index.js"),
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+    filename: devMode ? "[name].js" : "[name].[contenthash].js",
+    assetModuleFilename: "assets/[name][ext]",
+    publicPath: devMode ? "/" : "/prettyPaw/",
+  },
+  plugins: [
+    ...PAGES.map(
+      (page) =>
+        new HtmlWebpackPlugin({
+          template: path.resolve(__dirname, "src", `${page}.html`),
+          filename: `./${page}.html`,
+        }),
+    ),
+
+    // CSS всегда отдельным файлом (<link> в <head>), иначе в dev
+    // страница рендерится без стилей, пока не выполнится JS-бандл
+    new MiniCssExtractPlugin({
+      filename: devMode ? "[name].css" : "[name].[contenthash].css",
+    }),
+    new CopyPlugin({
+      patterns: [{ from: "static", to: "./" }],
+    }),
+    // Генерация фавиконок медленная, в dev она не нужна
+    ...(devMode
+      ? []
+      : [
+          new FaviconWebpackPlugin({
+            logo: "./src/img/icon.svg",
+            inject: true,
+          }),
+        ]),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
+        test: /\.(c|sa|sc)ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [require("postcss-preset-env")],
+              },
+            },
+          },
+          "group-css-media-queries-loader",
+          {
+            loader: "resolve-url-loader",
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.woff2?$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "fonts/[name][ext]",
+        },
+      },
+      {
+        test: /\.(jpe?g|png|webp|gif|svg)$/i,
+        use: devMode
+          ? []
+          : [
+              {
+                loader: "image-webpack-loader",
+                options: {
+                  mozjpeg: {
+                    progressive: true,
+                  },
+                  optipng: {
+                    enabled: false,
+                  },
+                  pngquant: {
+                    quality: [0.65, 0.9],
+                    speed: 4,
+                  },
+                  gifsicle: {
+                    interlaced: false,
+                  },
+                  webp: {
+                    quality: 75,
+                  },
+                },
+              },
+            ],
+        type: "asset/resource",
+      },
+      {
+        test: /\.(mp4|webm|avi|mov|mkv)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "video/[name][ext]",
+        },
+      },
+
+      {
+        test: /\.m?js$/i,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+    ],
+  },
+};

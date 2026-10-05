@@ -1,0 +1,211 @@
+@use "var" as *;
+@use "fonts";
+@use "header";
+@use "hero";
+@use "about";
+@use "location";
+@use "career";
+@use "page";
+@use "page-nav";
+@use "footer";
+@use "navigation";
+
+html {
+  position: relative;
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Mulish, sans-serif;
+  color: $main;
+  background-color: $back;
+  font-weight: 300;
+  line-height: 1.4;
+  font-size: 16px;
+
+  @include lg {
+    font-size: 20px;
+  }
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+
+button {
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+fieldset {
+  margin: 0;
+}
+
+iframe {
+  border: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  @include xxl {
+    max-width: 2560px;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.container {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  @include sm {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @include md {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @include xl {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  @include xxl {
+    max-width: 2560px;
+    margin: 0 auto;
+  }
+}
+
+.link-main {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 4px;
+  line-height: 1;
+  color: $back;
+  border-radius: 80px;
+  background: $second;
+  font-size: 16px;
+  font-weight: 1000;
+  border: 2px solid transparent;
+  outline: none;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.53342 12.8666C7.41119 12.7444 7.3472 12.5888 7.34142 12.4C7.33564 12.2111 7.39408 12.0555 7.51675 11.9333L10.7834 8.66662H3.33342C3.14453 8.66662 2.98608 8.60262 2.85808 8.47462C2.73008 8.34662 2.66631 8.1884 2.66675 7.99995C2.66675 7.81106 2.73075 7.65262 2.85875 7.52462C2.98675 7.39662 3.14497 7.33284 3.33342 7.33328H10.7834L7.51675 4.06662C7.39453 3.9444 7.33608 3.78884 7.34142 3.59995C7.34675 3.41106 7.41075 3.25551 7.53342 3.13328C7.65564 3.01106 7.8112 2.94995 8.00008 2.94995C8.18897 2.94995 8.34453 3.01106 8.46675 3.13328L12.8668 7.53328C12.9334 7.58884 12.9808 7.6584 13.0088 7.74195C13.0368 7.82551 13.0505 7.91151 13.0501 7.99995C13.0501 8.08884 13.0363 8.17217 13.0088 8.24995C12.9812 8.32773 12.9339 8.39995 12.8668 8.46662L8.46675 12.8666C8.34453 12.9888 8.18897 13.05 8.00008 13.05C7.8112 13.05 7.65564 12.9888 7.53342 12.8666Z' fill='%23000000'/%3E%3C/svg%3E%0A");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  &:focus:not(:hover) {
+    border-color: $main;
+  }
+
+  @include lg {
+    padding: 17px 32px;
+    font-size: 20px;
+    gap: 10px;
+    &:hover {
+      color: $main;
+      &::after {
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.53342 12.8666C7.41119 12.7444 7.3472 12.5888 7.34142 12.4C7.33564 12.2111 7.39408 12.0555 7.51675 11.9333L10.7834 8.66662H3.33342C3.14453 8.66662 2.98608 8.60262 2.85808 8.47462C2.73008 8.34662 2.66631 8.1884 2.66675 7.99995C2.66675 7.81106 2.73075 7.65262 2.85875 7.52462C2.98675 7.39662 3.14497 7.33284 3.33342 7.33328H10.7834L7.51675 4.06662C7.39453 3.9444 7.33608 3.78884 7.34142 3.59995C7.34675 3.41106 7.41075 3.25551 7.53342 3.13328C7.65564 3.01106 7.8112 2.94995 8.00008 2.94995C8.18897 2.94995 8.34453 3.01106 8.46675 3.13328L12.8668 7.53328C12.9334 7.58884 12.9808 7.6584 13.0088 7.74195C13.0368 7.82551 13.0505 7.91151 13.0501 7.99995C13.0501 8.08884 13.0363 8.17217 13.0088 8.24995C12.9812 8.32773 12.9339 8.39995 12.8668 8.46662L8.46675 12.8666C8.34453 12.9888 8.18897 13.05 8.00008 13.05C7.8112 13.05 7.65564 12.9888 7.53342 12.8666Z' fill='%23FFAA05'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+}
+
+.arrow-top {
+  width: 36px;
+  height: 36px;
+  right: 16px;
+  bottom: 30px;
+
+  @include sm {
+    right: 30px;
+  }
+
+  @include lg {
+    bottom: 100px;
+    width: 50px;
+    height: 50px;
+  }
+
+  &:hover {
+    color: $back;
+  }
+  &__svg {
+    width: 12px;
+    @include lg {
+      width: 16px;
+    }
+  }
+}
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 16px;
+  background-color: $second;
+  opacity: 1;
+  transition: width 0.3s ease;
+}
+.swiper-pagination-bullet-active {
+  width: 40px;
+  background-color: $back;
+}
